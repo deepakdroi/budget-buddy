@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import Login from "@/components/Login";
 
 export default function Home() {
   return (
@@ -19,7 +19,7 @@ export default function Home() {
             </p>
           </div>
           <div className="mt-8 flex justify-center gap-3">
-            <Button size={"lg"}>Get started</Button>
+            <Login />
           </div>
         </div>
       </div>
