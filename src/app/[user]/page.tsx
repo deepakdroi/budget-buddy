@@ -1,8 +1,8 @@
 "use client";
-import Login from "@/components/Login";
 import React, { useEffect, useState } from "react";
 import { doesUserExist } from "../actions/userActions";
 import { useRouter } from "next/navigation";
+import NewTransaction from "@/components/NewTransaction";
 
 export default function UserPage({
   params,
@@ -38,7 +38,7 @@ export default function UserPage({
             </p>
           </div>
           <div className="mt-8 flex justify-center gap-3">
-            <Login />
+            <NewTransaction user={loggedInUser} />
           </div>
         </div>
       </div>

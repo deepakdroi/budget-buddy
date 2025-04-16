@@ -28,7 +28,7 @@ import { UserSchema, userSchema } from "@/lib/schema/UserSchema";
 import { signInUser } from "@/app/actions/userActions";
 import { useRouter } from "next/navigation";
 
-export default function DialogCloseButton() {
+export default function LoginForm() {
   const router = useRouter();
   const form = useForm<z.infer<typeof userSchema>>({
     resolver: zodResolver(userSchema),
