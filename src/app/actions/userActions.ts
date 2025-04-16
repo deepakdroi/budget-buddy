@@ -2,21 +2,20 @@
 
 import { replacePercentTwenty } from "@/lib/helper";
 import { prisma } from "@/lib/prisma";
-import { UserSchema } from "@/lib/schema/UserSchema";
+import { userSchema } from "@/lib/schema/UserSchema";
 
-export async function signInUser(
-  data: UserSchema
-): Promise<ActionResult<string>> {
+export async function signInUser(data: unknown): Promise<ActionResult<string>> {
   try {
+    const parsedData = userSchema.parse(data);
     const user = await prisma.user.findUnique({
       where: {
-        name: data.name,
+        name: parsedData.name,
       },
     });
     if (!user) {
       const newUser = await prisma.user.create({
         data: {
-          name: data.name,
+          name: parsedData.name,
         },
       });
       if (!newUser) {
@@ -55,5 +54,24 @@ export async function doesUserExist(
       status: "error",
       error: "Unable to make connection to the database.",
     };
+  }
+}
+
+export async function getUserIdByName(name: string) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        name: name,
+      },
+      select: {
+        id: true,
+      },
+    });
+    if (user !== null) {
+      return { status: "success", data: user.id };
+    } else return { status: "error", data: "user does not exist" };
+  } catch (error) {
+    console.log(error);
+    return { status: "error", data: "Server Error" };
   }
 }
