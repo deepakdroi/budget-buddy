@@ -73,3 +73,38 @@ export async function getTransactionHistory(
     return { status: "error", error: "Unable to fetch transaction history" };
   }
 }
+
+export async function deleteTransaction(
+  id: string
+): Promise<ActionResult<string>> {
+  try {
+    const transaction = await prisma.transaction.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!transaction) {
+      return { status: "error", error: "Transaction not found" };
+    }
+    const deleteTransaction = await prisma.transaction.delete({
+      where: {
+        id,
+      },
+    });
+
+    if (!deleteTransaction) {
+      return {
+        status: "error",
+        error: "Failed to delete",
+      };
+    }
+    console.log(deleteTransaction);
+    return { status: "success", data: "Deleted" };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: "error",
+      error: "Unable to reach database. try again later",
+    };
+  }
+}

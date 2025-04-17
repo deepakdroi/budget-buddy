@@ -1,5 +1,8 @@
 "use client";
-import { getTransactionHistory } from "@/app/actions/transactionAction";
+import {
+  deleteTransaction,
+  getTransactionHistory,
+} from "@/app/actions/transactionAction";
 import { doesUserExist } from "@/app/actions/userActions";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,7 +36,7 @@ export default function TransactionsPage({
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [totalExpense, setTotalExpense] = useState<number>(0);
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [selectedTx, setSelectedTx] = useState<Transaction | null>();
+  const [selectedTransaction, setSelectedTx] = useState<Transaction | null>();
   // Empty dependency array ensures effect runs only once
   useEffect(() => {
     const userExists = async () => {
@@ -71,6 +74,14 @@ export default function TransactionsPage({
     setExpandedId(expandedId === id ? null : id); // Toggle expansion
   };
 
+  const handleDelete = async function (id: string) {
+    const isDeleted = await deleteTransaction(id);
+
+    if (isDeleted.status === "success") {
+      router.refresh();
+      window.location.reload();
+    }
+  };
   return (
     <>
       <div>
@@ -135,9 +146,12 @@ export default function TransactionsPage({
           </div>
         </div>
       </div>
-      <Dialog open={!!selectedTx} onOpenChange={() => setSelectedTx(null)}>
+      <Dialog
+        open={!!selectedTransaction}
+        onOpenChange={() => setSelectedTx(null)}
+      >
         <DialogContent>
-          {selectedTx && (
+          {selectedTransaction && (
             <>
               <DialogHeader>
                 <DialogTitle>Transaction Details</DialogTitle>
@@ -147,24 +161,36 @@ export default function TransactionsPage({
               </DialogHeader>
               <div className="space-y-2 text-sm">
                 <p>
-                  <strong>Category:</strong> {selectedTx.category}
+                  <strong>Category:</strong> {selectedTransaction.category}
                 </p>
                 <p>
-                  <strong>Amount:</strong> ${selectedTx.amount}
+                  <strong>Amount:</strong> ${selectedTransaction.amount}
                 </p>
                 <p>
                   <strong>Date:</strong>{" "}
-                  {new Date(selectedTx.date).toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}
+                  {new Date(selectedTransaction.date).toLocaleDateString(
+                    "en-GB",
+                    {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    }
+                  )}
                 </p>
                 <p>
-                  <strong>Description:</strong> {selectedTx.description}
+                  <strong>Description:</strong>{" "}
+                  {selectedTransaction.description}
                 </p>
               </div>
               <div className="pt-4">
+                <Button
+                  onClick={() => handleDelete(selectedTransaction.id)}
+                  variant="destructive"
+                  className="mb-2"
+                >
+                  Delete
+                </Button>
+                <br />
                 <Button onClick={() => setSelectedTx(null)} variant="secondary">
                   Close
                 </Button>
