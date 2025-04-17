@@ -20,7 +20,7 @@ type Transaction = {
     | string; // Allow any string value to handle cases outside predefined literals
   amount: number;
   date: Date;
-  description: string | null; // Accept null
+  description: string | null;
 };
 
 type Transactions = Transaction[]; // Array of Transaction objects

@@ -190,7 +190,7 @@ export default function TransactionsPage({
                     category: selectedTransaction.category as "Food & Dining",
                     amount: selectedTransaction.amount,
                     date: selectedTransaction.date,
-                    description: selectedTransaction.description,
+                    description: selectedTransaction.description ?? "",
                   }}
                   buttonLabel={"Edit Expense"}
                 />

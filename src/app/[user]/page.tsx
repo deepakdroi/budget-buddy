@@ -23,6 +23,12 @@ export default function UserPage({
     };
     userExists();
   }, [params, router]);
+  const defaultValue = {
+    category: "Food & Dining" as const,
+    amount: 0,
+    date: new Date(),
+    description: "",
+  };
   return (
     <>
       <div>
@@ -38,7 +44,11 @@ export default function UserPage({
             </p>
           </div>
           <div className="mt-8 flex justify-center gap-3">
-            <NewTransaction user={loggedInUser} />
+            <NewTransaction
+              user={loggedInUser}
+              defaultValues={defaultValue}
+              buttonLabel={"Add New Expense"}
+            />
           </div>
         </div>
       </div>

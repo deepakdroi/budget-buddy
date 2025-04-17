@@ -37,17 +37,28 @@ import { addExpense } from "@/app/actions/transactionAction";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { useState } from "react";
 
-export default function NewTransaction({ user }: { user: string }) {
+type ComponentProps = {
+  user: string;
+  defaultValues: {
+    category: "Food & Dining";
+    amount: number;
+    date: Date;
+    description: string;
+  };
+  buttonLabel: string;
+};
+
+export default function NewTransaction({
+  user,
+  defaultValues,
+  buttonLabel,
+}: ComponentProps) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
   const form = useForm<z.infer<typeof transactionSchema>>({
     resolver: zodResolver(transactionSchema),
-    defaultValues: {
-      amount: 0,
-      date: undefined,
-      description: "",
-    },
+    defaultValues: defaultValues,
     mode: "onTouched",
   });
 
@@ -62,7 +73,7 @@ export default function NewTransaction({ user }: { user: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size={"lg"}>Add New Expense</Button>
+        <Button size={"lg"}>{buttonLabel}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
