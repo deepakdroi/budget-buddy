@@ -4,6 +4,7 @@ import {
   getTransactionHistory,
 } from "@/app/actions/transactionAction";
 import { doesUserExist } from "@/app/actions/userActions";
+import NewTransaction from "@/components/NewTransaction";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -62,7 +63,7 @@ export default function TransactionsPage({
       }
     };
     userExists();
-  }, []);
+  }, [router, params]);
 
   // New useEffect to calculate totalExpense based on updated transactions state
   useEffect(() => {
@@ -183,10 +184,20 @@ export default function TransactionsPage({
                 </p>
               </div>
               <div className="pt-4">
+                <NewTransaction
+                  user={loggedInUser}
+                  defaultValues={{
+                    category: selectedTransaction.category as "Food & Dining",
+                    amount: selectedTransaction.amount,
+                    date: selectedTransaction.date,
+                    description: selectedTransaction.description,
+                  }}
+                  buttonLabel={"Edit Expense"}
+                />
                 <Button
                   onClick={() => handleDelete(selectedTransaction.id)}
                   variant="destructive"
-                  className="mb-2"
+                  className="mb-2 ml-2"
                 >
                   Delete
                 </Button>
