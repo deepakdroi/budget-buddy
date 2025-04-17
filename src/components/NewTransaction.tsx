@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -30,19 +29,18 @@ import {
 } from "@/lib/schema/TransactionSchema";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "./ui/select";
 import { Input } from "./ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@radix-ui/react-popover";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "./ui/calendar";
 import { format } from "date-fns";
 import { addExpense } from "@/app/actions/transactionAction";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { useState } from "react";
 
 export default function NewTransaction({ user }: { user: string }) {
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+
   const form = useForm<z.infer<typeof transactionSchema>>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
@@ -56,15 +54,13 @@ export default function NewTransaction({ user }: { user: string }) {
   async function onSubmit(data: TransactionSchema) {
     const result = await addExpense(data, user);
     if (result.status === "success") {
-      console.log("Result from addExpense: ", result.data);
-      router.push(`/${user}`);
-      // }
-      // console.log("Result from signInUser: ", result);
-      // ✅ This will be type-safe and validated.
+      router.refresh();
+      form.reset();
+      setOpen(false);
     } else console.log("Error from addExpense: ", result.error);
   }
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button size={"lg"}>Add New Expense</Button>
       </DialogTrigger>
@@ -216,11 +212,9 @@ export default function NewTransaction({ user }: { user: string }) {
           </Form>
         </div>
         <DialogFooter className="sm:justify-start">
-          <DialogClose asChild>
-            <Button type="button" variant="secondary">
-              Close
-            </Button>
-          </DialogClose>
+          <Button type="button" variant="secondary">
+            Close
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

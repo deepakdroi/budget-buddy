@@ -44,7 +44,8 @@ export async function doesUserExist(
     });
 
     if (userExists) {
-      return { status: "success", data: user };
+      console.log(userExists.name, "exists");
+      return { status: "success", data: userExists.name };
     } else {
       return { status: "error", error: "user not found" };
     }
