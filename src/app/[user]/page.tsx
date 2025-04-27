@@ -48,6 +48,7 @@ export default function UserPage({
               user={loggedInUser}
               defaultValues={defaultValue}
               buttonLabel={"Add New Expense"}
+              transactionId={null}
             />
           </div>
         </div>

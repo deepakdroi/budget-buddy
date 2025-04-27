@@ -33,7 +33,7 @@ import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "./ui/calendar";
 import { format } from "date-fns";
-import { addExpense } from "@/app/actions/transactionAction";
+import { addExpense, editTransaction } from "@/app/actions/transactionAction";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { useState } from "react";
 
@@ -46,12 +46,14 @@ type ComponentProps = {
     description: string;
   };
   buttonLabel: string;
+  transactionId: string | null;
 };
 
 export default function NewTransaction({
   user,
   defaultValues,
   buttonLabel,
+  transactionId,
 }: ComponentProps) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -63,12 +65,21 @@ export default function NewTransaction({
   });
 
   async function onSubmit(data: TransactionSchema) {
-    const result = await addExpense(data, user);
-    if (result.status === "success") {
-      router.refresh();
-      form.reset();
-      setOpen(false);
-    } else console.log("Error from addExpense: ", result.error);
+    if (transactionId != null) {
+      const result = await editTransaction(data, user, transactionId);
+      if (result.status === "success") {
+        router.refresh();
+        form.reset();
+        setOpen(false);
+      } else console.log("Error from addExpense: ", result.error);
+    } else {
+      const result = await addExpense(data, user);
+      if (result.status === "success") {
+        router.refresh();
+        form.reset();
+        setOpen(false);
+      } else console.log("Error from addExpense: ", result.error);
+    }
   }
   return (
     <Dialog open={open} onOpenChange={setOpen}>

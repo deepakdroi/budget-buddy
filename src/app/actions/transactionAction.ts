@@ -108,3 +108,53 @@ export async function deleteTransaction(
     };
   }
 }
+export async function editTransaction(
+  data: TransactionSchema,
+  user: string,
+  id: string
+): Promise<ActionResult<string>> {
+  let currentUserId = null;
+  try {
+    const userId = await getUserIdByName(user);
+    if (userId.status === "success") {
+      currentUserId = userId.data;
+    } else {
+      return { status: "error", error: "User not authorized" };
+    }
+    const transaction = await prisma.transaction.findUnique({
+      where: {
+        id,
+        userId: currentUserId,
+      },
+    });
+    if (!transaction) {
+      return { status: "error", error: "Transaction not found" };
+    }
+    const editedTransaction = await prisma.transaction.update({
+      where: {
+        id,
+      },
+      data: {
+        category: data.category,
+        amount: data.amount,
+        date: data.date,
+        description: data.description,
+        userId: currentUserId,
+      },
+    });
+
+    if (!editedTransaction) {
+      return {
+        status: "error",
+        error: "Failed to edit",
+      };
+    }
+    return { status: "success", data: "Transaction successfully updated" };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: "error",
+      error: "Unable to reach database. try again later",
+    };
+  }
+}

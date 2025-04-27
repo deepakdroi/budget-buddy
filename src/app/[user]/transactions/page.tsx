@@ -40,6 +40,7 @@ export default function TransactionsPage({
   const [selectedTransaction, setSelectedTx] = useState<Transaction | null>();
   // Empty dependency array ensures effect runs only once
   useEffect(() => {
+    setSelectedTx(null);
     const userExists = async () => {
       const resolvedParams = await params; // Resolve the promise
       const { user } = resolvedParams; // Safely destructure
@@ -183,7 +184,7 @@ export default function TransactionsPage({
                   {selectedTransaction.description}
                 </p>
               </div>
-              <div className="pt-4">
+              <div onAuxClick={() => setSelectedTx(null)} className="pt-4">
                 <NewTransaction
                   user={loggedInUser}
                   defaultValues={{
@@ -193,6 +194,7 @@ export default function TransactionsPage({
                     description: selectedTransaction.description ?? "",
                   }}
                   buttonLabel={"Edit Expense"}
+                  transactionId={selectedTransaction.id}
                 />
                 <Button
                   onClick={() => handleDelete(selectedTransaction.id)}
