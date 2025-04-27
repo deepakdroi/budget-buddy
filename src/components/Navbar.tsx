@@ -56,11 +56,11 @@ export default function Navbar() {
             Transactions
           </Link>
           <Link
-            href="#"
+            href={pathname + "/charts"}
             className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             prefetch={false}
           >
-            Services
+            Charts
           </Link>
           <Link
             href="#"
@@ -119,11 +119,11 @@ export default function Navbar() {
                   Transactions
                 </Link>
                 <Link
-                  href="#"
+                  href={pathname + "/charts"}
                   className="text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                   prefetch={false}
                 >
-                  Services
+                  Charts
                 </Link>
                 <Link
                   href="#"

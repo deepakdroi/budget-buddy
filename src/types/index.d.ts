@@ -24,3 +24,8 @@ type Transaction = {
 };
 
 type Transactions = Transaction[]; // Array of Transaction objects
+
+type MonthlyExpenseData = {
+  name: string; // Month abbreviation
+  expense: number; // Expense amount
+};
