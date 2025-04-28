@@ -26,7 +26,7 @@ export default function Navbar() {
   }, [pathname]);
   const setHomeUrl = async function (slug: string) {
     const user = await doesUserExist(slug);
-    if (user.status === "success") setDashboardUrl(`/${slug}`);
+    if (user.status === "success") setDashboardUrl(`/${user.data}`);
     else setDashboardUrl("/");
   };
 
@@ -49,14 +49,14 @@ export default function Navbar() {
             Dashboard
           </Link>
           <Link
-            href={pathname + "/transactions"}
+            href={dashboardUrl + "/transactions"}
             className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             prefetch={false}
           >
             Transactions
           </Link>
           <Link
-            href={pathname + "/charts"}
+            href={dashboardUrl + "/charts"}
             className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             prefetch={false}
           >
@@ -112,14 +112,14 @@ export default function Navbar() {
                   Dashboard
                 </Link>
                 <Link
-                  href={pathname + "/transactions"}
+                  href={dashboardUrl + "/transactions"}
                   className="text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                   prefetch={false}
                 >
                   Transactions
                 </Link>
                 <Link
-                  href={pathname + "/charts"}
+                  href={dashboardUrl + "/charts"}
                   className="text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                   prefetch={false}
                 >
