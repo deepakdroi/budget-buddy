@@ -1,7 +1,7 @@
 "use server";
 
 import { replacePercentTwenty } from "@/lib/helper";
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { userSchema } from "@/lib/schema/UserSchema";
 
 export async function signInUser(data: unknown): Promise<ActionResult<string>> {
