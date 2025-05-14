@@ -4,7 +4,7 @@ import { replacePercentTwenty } from "@/lib/helper";
 import { prisma } from "@/lib/prisma";
 import { userSchema } from "@/lib/schema/UserSchema";
 
-export async function signInUser(data: string): Promise<ActionResult<string>> {
+export async function signInUser(data: unknown): Promise<ActionResult<string>> {
   try {
     const parsedData = userSchema.parse(data);
     const user = await prisma.user.findUnique({
