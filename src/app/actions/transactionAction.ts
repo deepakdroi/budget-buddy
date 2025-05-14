@@ -2,7 +2,7 @@
 
 import { TransactionSchema } from "@/lib/schema/TransactionSchema";
 import { getUserIdByName } from "./userActions";
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { formatTransactions } from "@/lib/helper";
 
 export async function addExpense(
