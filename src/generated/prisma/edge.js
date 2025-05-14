@@ -158,11 +158,12 @@ const config = {
     "db"
   ],
   "activeProvider": "mongodb",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "MONGODB_URL",
-        "value": "mongodb+srv://deepakmahto:nrvJEG2pDaApWwcu@budget-buddy.97133ub.mongodb.net/budget-buddy?retryWrites=true&w=majority&appName=budget-buddy"
+        "value": null
       }
     }
   },
