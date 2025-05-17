@@ -175,7 +175,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "POSTGRESQL_URL",
-        "value": "postgresql://budgetBuddy_owner:npg_5IQo2xGKZswL@ep-green-bar-a1ewndct-pooler.ap-southeast-1.aws.neon.tech/budgetBuddy?sslmode=require"
+        "value": "postgresql://budgetBuddy_owner:npg_vax3bfK0ZhXQ@ep-red-snow-a1p4uin1-pooler.ap-southeast-1.aws.neon.tech/budgetBuddy?sslmode=require"
       }
     }
   },
