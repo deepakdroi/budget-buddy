@@ -10,8 +10,8 @@ generator client {
 }
 
 datasource db {
-  provider     = "mongodb"
-  url          = env("MONGODB_URL")
+  provider     = "postgresql"
+  url          = env("POSTGRESQL_URL")
   relationMode = "prisma"
 }
 
