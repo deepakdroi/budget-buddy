@@ -11,7 +11,7 @@ generator client {
 
 datasource db {
   provider     = "postgresql"
-  url          = env("POSTGRESQL_URL")
+  url          = env("SERVER_POSTGRESQL_URL")
   relationMode = "prisma"
 }
 
