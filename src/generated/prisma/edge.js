@@ -85,13 +85,6 @@ Prisma.NullTypes = {
 /**
  * Enums
  */
-exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
-  ReadUncommitted: 'ReadUncommitted',
-  ReadCommitted: 'ReadCommitted',
-  RepeatableRead: 'RepeatableRead',
-  Serializable: 'Serializable'
-});
-
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name'
@@ -121,11 +114,6 @@ exports.Prisma.SortOrder = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
-};
-
-exports.Prisma.NullsOrder = {
-  first: 'first',
-  last: 'last'
 };
 
 
@@ -163,7 +151,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -172,8 +160,7 @@ const config = {
   "datasourceNames": [
     "db"
   ],
-  "activeProvider": "postgresql",
-  "postinstall": false,
+  "activeProvider": "mongodb",
   "inlineDatasources": {
     "db": {
       "url": {
@@ -182,8 +169,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider     = \"postgresql\"\n  url          = env(\"DATABASE_URL\")\n  relationMode = \"prisma\"\n}\n\nmodel User {\n  id           String        @id @default(cuid()) @map(\"_id\")\n  name         String        @unique\n  transactions Transaction[]\n  budgets      Budget[]\n\n  @@map(\"users\")\n}\n\nmodel Transaction {\n  id          String   @id @default(cuid()) @map(\"_id\")\n  author      User     @relation(fields: [userId], references: [id])\n  userId      String\n  category    String\n  amount      Float\n  date        DateTime\n  description String?\n\n  @@map(\"transactions\")\n}\n\nmodel Budget {\n  id     String  @id @default(cuid()) @map(\"_id\")\n  user   User    @relation(fields: [userId], references: [id])\n  userId String\n  name   String? @unique\n  amount Float\n\n  @@map(\"budgets\")\n}\n",
-  "inlineSchemaHash": "22f7f74734a6bbf38147e67642d0b60d042e056f294258f55df38f546ea5bda3",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider     = \"mongodb\"\n  url          = env(\"DATABASE_URL\")\n  relationMode = \"prisma\"\n}\n\nmodel User {\n  id           String        @id @default(cuid()) @map(\"_id\")\n  name         String        @unique\n  transactions Transaction[]\n  budgets      Budget[]\n\n  @@map(\"users\")\n}\n\nmodel Transaction {\n  id          String   @id @default(cuid()) @map(\"_id\")\n  author      User     @relation(fields: [userId], references: [id])\n  userId      String\n  category    String\n  amount      Float\n  date        DateTime\n  description String?\n\n  @@map(\"transactions\")\n}\n\nmodel Budget {\n  id     String  @id @default(cuid()) @map(\"_id\")\n  user   User    @relation(fields: [userId], references: [id])\n  userId String\n  name   String? @unique\n  amount Float\n\n  @@map(\"budgets\")\n}\n",
+  "inlineSchemaHash": "1c96ae3a83a1bf0870b5b26898012ac357b3d992b08080b38a51db750bb10342",
   "copyEngine": true
 }
 config.dirname = '/'

@@ -1,16 +1,22 @@
 // import { PrismaClient } from "@prisma/client";
 
+import { PrismaClient } from "@/generated/prisma/client";
+
 // import { PrismaClient } from '../app/generated/prisma'
-import { PrismaClient } from "@/generated/prisma";
-import { withAccelerate } from "@prisma/extension-accelerate";
 
-const globalForPrisma = global as unknown as {
-  prisma: PrismaClient;
-};
+const prisma = new PrismaClient();
 
-const prisma =
-  globalForPrisma.prisma || new PrismaClient().$extends(withAccelerate());
+async function main() {
+  // ... you will write your Prisma Client queries here
+}
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+main()
+  .catch(async (e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
 
 export default prisma;
