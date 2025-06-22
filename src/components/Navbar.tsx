@@ -123,7 +123,7 @@ export default function Navbar() {
                 <HoveredLink href={dashboardUrl + "/charts"}>
                   Monthly Expenses
                 </HoveredLink>
-                <HoveredLink href={dashboardUrl + "/charts/categories"}>
+                <HoveredLink href={dashboardUrl + "/categories"}>
                   Categoric Expenses
                 </HoveredLink>
               </div>
