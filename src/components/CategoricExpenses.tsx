@@ -20,13 +20,34 @@ interface LabelProps {
 }
 
 const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
+  { name: "Food & Dining", value: 520 },
+  { name: "Transportation", value: 340 },
+  { name: "Housing", value: 780 },
+  { name: "Health & Fitness", value: 215 },
+  { name: "Entertainment", value: 430 },
+  { name: "Personal care", value: 125 },
+  { name: "Education", value: 690 },
+  { name: "Investments", value: 310 },
+  { name: "Debt Payments", value: 250 },
+  { name: "Gifts and Donations", value: 90 },
+  { name: "Shopping", value: 475 },
+  { name: "Miscellaneous", value: 180 },
 ];
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = [
+  "#FF6666", // Deep blush red
+  "#666699", // Muted indigo blue
+  "#FF9C4D", // Toasted peach
+  "#7DCFA1", // Balanced sage green
+  "#CC66CC", // Rosy lilac
+  "#FF99CC", // Vivid cotton candy
+  "#FFD066", // Warm soft gold
+  "#339999", // Medium teal
+  "#BFBFBF", // Satin silver
+  "#CCCCFF", // Gentle twilight lavender
+  "#66FFFF", // Clear sky aqua
+  "#C05050", // Rich dusty crimson
+];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
