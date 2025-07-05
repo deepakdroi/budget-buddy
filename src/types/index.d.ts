@@ -29,3 +29,8 @@ type MonthlyExpenseData = {
   name: string; // Month abbreviation
   expense: number; // Expense amount
 };
+
+type CategoricExpenseData = {
+  category: string; // Category name
+  amount: number; //Total amount for the category
+};

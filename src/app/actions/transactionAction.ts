@@ -3,7 +3,7 @@
 import { TransactionSchema } from "@/lib/schema/TransactionSchema";
 import { getUserIdByName } from "./userActions";
 import prisma from "@/lib/prisma";
-import { formatTransactions } from "@/lib/helper";
+import { formatTransactions, summarizeExpenses } from "@/lib/helper";
 
 export async function addExpense(
   data: TransactionSchema,
@@ -208,7 +208,66 @@ export async function fetchMonthlyExpense(
         error: "No transactions found", // Changed to match what you check for in the component
       };
     } else {
+      // console.log(transactions);
       const formattedTransactions = formatTransactions(transactions);
+      return { status: "success", data: formattedTransactions };
+    }
+  } catch (error) {
+    console.error("Transaction fetch error:", error);
+    return { status: "error", error: "Unable to fetch transaction history" };
+  }
+}
+export async function fetchCategoricExpense(
+  user: string,
+  year: string
+): Promise<ActionResult<CategoricExpenseData[]>> {
+  try {
+    // Get user ID
+    const userId = await getUserIdByName(user);
+    if (userId.status === "error") {
+      return { status: "error", error: "User not found" };
+    }
+
+    console.log("User ID:", userId.data);
+
+    // Parse year to ensure it's properly handled in date calculations
+    const yearNum = parseInt(year);
+
+    // Format dates properly for Prisma
+    const startDate = new Date(Date.UTC(yearNum, 0, 1)); // January 1st of the year
+    const endDate = new Date(Date.UTC(yearNum + 1, 0, 1)); // January 1st of next year
+
+    console.log("Date range:", startDate, "to", endDate);
+
+    // Query transactions
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        userId: userId.data,
+        date: {
+          gte: startDate,
+          lt: endDate,
+        },
+      },
+      select: {
+        category: true,
+        amount: true,
+      },
+      orderBy: {
+        date: "asc",
+      },
+    });
+
+    console.log("Found transactions:", transactions.length);
+
+    if (transactions.length === 0) {
+      return {
+        status: "error",
+        error: "No transactions found", // Changed to match what you check for in the component
+      };
+    } else {
+      console.log(transactions);
+      const formattedTransactions = summarizeExpenses(transactions);
+      console.log("Formatted transactions:", formattedTransactions);
       return { status: "success", data: formattedTransactions };
     }
   } catch (error) {

@@ -39,3 +39,45 @@ export function formatTransactions(
     expense,
   }));
 }
+
+type CategoricExpenseData = {
+  category: string;
+  amount: number;
+};
+
+const CATEGORY_LIST: CategoricExpenseData["category"][] = [
+  "Food & Dining",
+  "Transportation",
+  "Housing",
+  "Health & Fitness",
+  "Entertainment",
+  "Personal care",
+  "Education",
+  "Investments",
+  "Debt Payments",
+  "Gifts and Donations",
+  "Shopping",
+  "Miscellaneous",
+];
+
+export function summarizeExpenses(
+  expenses: { amount: number; category: string }[]
+): CategoricExpenseData[] {
+  const summaryMap = new Map<string, number>();
+
+  // Initialize all categories with 0
+  CATEGORY_LIST.forEach((category) => summaryMap.set(category, 0));
+
+  // Sum amounts for existing categories
+  expenses.forEach(({ category, amount }) => {
+    if (summaryMap.has(category)) {
+      summaryMap.set(category, summaryMap.get(category)! + amount);
+    }
+  });
+
+  // Convert map to array
+  return CATEGORY_LIST.map((category) => ({
+    category,
+    amount: summaryMap.get(category)!,
+  }));
+}
