@@ -1,5 +1,5 @@
 "use client";
-import { fetchMonthlyExpense } from "@/app/actions/transactionAction";
+import { fetchCategoricExpense } from "@/app/actions/transactionAction";
 import { doesUserExist } from "@/app/actions/userActions";
 import CategoricExpense from "@/components/CategoricExpenses";
 import { useRouter } from "next/navigation";
@@ -11,7 +11,7 @@ export default function Charts({
   params: Promise<{ user: string }>;
 }) {
   const router = useRouter();
-  // const [transactions, setTransactions] = useState<MonthlyExpenseData[]>([]);
+  const [transactions, setTransactions] = useState<CategoricExpenseData[]>([]);
   const [loggedInUser, setLoggedInUser] = useState<string>("Buddy");
   const [loading, setLoading] = useState(true);
 
@@ -32,7 +32,7 @@ export default function Charts({
         // Set user state before fetching transactions
         setLoggedInUser(currentUser.data);
 
-        const fetchTransactions = await fetchMonthlyExpense(
+        const fetchTransactions = await fetchCategoricExpense(
           currentUser.data,
           "2025"
         );
@@ -43,10 +43,11 @@ export default function Charts({
             return; // Exit early
           } else {
             console.log("No transactions found");
-            // setTransactions([]); // Update state with empty array
+            setTransactions([]); // Update state with empty array
           }
         } else {
-          // setTransactions(fetchTransactions.data);
+          setTransactions(fetchTransactions.data);
+          console.log(transactions);
         }
 
         setLoading(false);
@@ -75,7 +76,7 @@ export default function Charts({
             Hey {loggedInUser}
           </h1>
         </div>
-        <CategoricExpense />
+        <CategoricExpense data={transactions} />
         <div className="mt-8 flex justify-center gap-3">
           {/* <NewTransaction user={loggedInUser} /> */}
         </div>

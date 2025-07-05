@@ -19,20 +19,20 @@ interface LabelProps {
   percent: number;
 }
 
-const data = [
-  { name: "Food & Dining", value: 520 },
-  { name: "Transportation", value: 340 },
-  { name: "Housing", value: 780 },
-  { name: "Health & Fitness", value: 215 },
-  { name: "Entertainment", value: 430 },
-  { name: "Personal care", value: 125 },
-  { name: "Education", value: 690 },
-  { name: "Investments", value: 310 },
-  { name: "Debt Payments", value: 250 },
-  { name: "Gifts and Donations", value: 90 },
-  { name: "Shopping", value: 475 },
-  { name: "Miscellaneous", value: 180 },
-];
+// const data = [
+//   { name: "Food & Dining", value: 520 },
+//   { name: "Transportation", value: 340 },
+//   { name: "Housing", value: 780 },
+//   { name: "Health & Fitness", value: 215 },
+//   { name: "Entertainment", value: 430 },
+//   { name: "Personal care", value: 125 },
+//   { name: "Education", value: 690 },
+//   { name: "Investments", value: 310 },
+//   { name: "Debt Payments", value: 250 },
+//   { name: "Gifts and Donations", value: 90 },
+//   { name: "Shopping", value: 475 },
+//   { name: "Miscellaneous", value: 180 },
+// ];
 
 const COLORS = [
   "#FF6666", // Deep blush red
@@ -75,7 +75,11 @@ const renderCustomizedLabel = ({
   );
 };
 
-export default function CategoricExpense() {
+export default function CategoricExpense({
+  data,
+}: {
+  data: CategoricExpenseData[];
+}) {
   return (
     <Card>
       <CardHeader>
@@ -93,7 +97,8 @@ export default function CategoricExpense() {
               label={renderCustomizedLabel}
               outerRadius={80}
               fill="#8884d8"
-              dataKey="value"
+              dataKey="amount"
+              nameKey={"category"}
             >
               {data.map((entry, index) => (
                 <Cell
