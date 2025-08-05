@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Budget-Buddy
 
-## Getting Started
+Web Application To Record And Monitor Your Spending Habits.
 
-First, run the development server:
+## 📘 Project Description
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Budget-Buddy is a full-stack financial record-keeping web application designed to help users manage their expenses with ease and clarity. Built with Next.js and powered by PostgreSQL via Prisma ORM, the app offers a seamless experience for tracking, visualizing, and organizing financial data.
+Users can perform full CRUD operations on their expenses, view interactive graphs powered by Recharts, and navigate a clean, responsive interface styled with Tailwind CSS, HTML, and CSS. The integration of Shadcn UI ensures a modern and accessible design system, while TypeScript and React provide a robust and scalable codebase.
+Whether you're budgeting for personal goals or analyzing spending trends, Budget-Buddy delivers a reliable and intuitive platform for financial awareness
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Great! Here's a well-structured Getting Started section for your project that includes instructions for setting up the DATABASE_URL with a MongoDB API key, configuring Prisma, and initializing the database:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Budget-Buddy offers a comprehensive suite of tools to help users manage and visualize their financial data:
 
-## Learn More
+- 🧾 Add Expenses with Strategic Categorization
+  Log expenses under predefined or custom categories such as Food, Travel, Utilities, etc., enabling smarter tracking and analysis.
+- 📋 View and Manage Expense History
+  Access a detailed list of all recorded expenses with options to edit or delete entries for accurate record-keeping.
+- 📊 Monthly Expense Bar Graph
+  Visualize your spending trends over time with an interactive bar chart, making it easy to identify peaks and patterns.
+- 🥧 Categorical Expense Pie Chart
+  Understand your spending distribution across categories with a dynamic pie chart, offering insights into where your money goes.
+- ⚡ Responsive and Intuitive UI
+  Built with Shadcn UI and Tailwind CSS, the app adapts seamlessly across devices for a smooth user experience.
+- 🔍 Fast and Reliable Backend
+  Powered by Next.js, Prisma ORM, and PostgreSQL (or MongoDB), ensuring efficient data handling and scalability
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Getting Started
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To get your local development environment up and running, follow these steps:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. 📦 Clone the Repository
+   git clone https://github.com/deepakdroi/budget-buddy
+   cd budget-buddy
 
-## Deploy on Vercel
+2. 🔐 Set Up Environment Variables
+   Create a .env file in the root directory and add your MongoDB connection string:
+   DATABASE_URL="mongodb+srv://<username>:<password>@cluster0.mongodb.net/<dbname>?retryWrites=true&w=majority"
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+💡 Note: If you prefer to use another database (e.g., PostgreSQL or MySQL), update the provider field in prisma/schema.prisma accordingly:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+datasource db {
+provider = "postgresql" // or "mysql", "sqlite", "mongodb"
+url = env("DATABASE_URL")
+}
+
+3. 📐 Configure Prisma
+   Install dependencies and initialize Prisma:
+   -npm install
+   -npx prisma generate
+
+If you're starting fresh, run the following to create the initial migration and push the schema to your database:
+-npx prisma db push
+
+🛠️ For relational databases (like PostgreSQL), you may prefer using migrations:
+
+-npx prisma migrate dev --name init
+
+4. 🏃‍♂️ Run the Development Server
+   -npm run dev
+
+Your app should now be running at http://localhost:3000 🎉
+
+## Help
+
+Any advise for common problems or issues or want to report any bug feel free to reach me at the discord link below.
+Feel free to team up with me and add new features and work on new ideas.
+
+https://discord.gg/EkMxMwxFtz
+
+## Authors
+
+Deepak Mahto
+email: deepak.mahto706@gmail/com
+
+## Version History
+
+- Still under development so no version yet
+
+## Acknowledgments
+
+Inspiration, code snippets, etc.
+
+- [NextJS](https://nextjs.org/)
+- [Shadcn](https://www.shadcnblocks.com/)
+- [Prisma](https://www.prisma.io/)
